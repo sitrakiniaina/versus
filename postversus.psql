@@ -1,0 +1,846 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.4
+-- Dumped by pg_dump version 9.5.4
+
+-- Started on 2017-02-12 17:35:49
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'SQL_ASCII';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 2226 (class 1262 OID 17398)
+-- Name: POSTVERSUS; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE "POSTVERSUS" WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'French_France.1252' LC_CTYPE = 'French_France.1252';
+
+
+ALTER DATABASE "POSTVERSUS" OWNER TO postgres;
+
+\connect "POSTVERSUS"
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'SQL_ASCII';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 1 (class 3079 OID 12355)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2229 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 181 (class 1259 OID 17399)
+-- Name: amitie; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE amitie (
+    idamitie bigint NOT NULL,
+    idmembre bigint NOT NULL,
+    mem_idmembre bigint NOT NULL,
+    dateajout date NOT NULL,
+    ami boolean NOT NULL
+);
+
+
+ALTER TABLE amitie OWNER TO postgres;
+
+--
+-- TOC entry 182 (class 1259 OID 17402)
+-- Name: demandeami; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE demandeami (
+    iddemandeami bigint NOT NULL,
+    idmembre bigint NOT NULL,
+    mem_idmembre bigint NOT NULL,
+    datedemandeami date NOT NULL,
+    accepte boolean NOT NULL,
+    vue boolean NOT NULL
+);
+
+
+ALTER TABLE demandeami OWNER TO postgres;
+
+--
+-- TOC entry 183 (class 1259 OID 17405)
+-- Name: evenementphoto; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE evenementphoto (
+    idevenementphoto bigint NOT NULL,
+    titre character varying(50) NOT NULL,
+    description text NOT NULL,
+    dateevenement date NOT NULL,
+    dateexpiration date NOT NULL
+);
+
+
+ALTER TABLE evenementphoto OWNER TO postgres;
+
+--
+-- TOC entry 184 (class 1259 OID 17411)
+-- Name: evenementtexte; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE evenementtexte (
+    idevenementtexte bigint NOT NULL,
+    titre character varying(50) NOT NULL,
+    description text NOT NULL,
+    dateevenement date NOT NULL,
+    dateexpiration date NOT NULL
+);
+
+
+ALTER TABLE evenementtexte OWNER TO postgres;
+
+--
+-- TOC entry 185 (class 1259 OID 17417)
+-- Name: inscription; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE inscription (
+    idinscription bigint NOT NULL,
+    idtoken bigint NOT NULL,
+    nom character varying(50) NOT NULL,
+    prenom character varying(50) NOT NULL,
+    datenaissance date NOT NULL,
+    sexe character varying(1) NOT NULL,
+    mail character varying(50) NOT NULL,
+    motdepasse character varying(50) NOT NULL,
+    dateexpiration date NOT NULL,
+    dateinscription date NOT NULL
+);
+
+
+ALTER TABLE inscription OWNER TO postgres;
+
+--
+-- TOC entry 186 (class 1259 OID 17420)
+-- Name: membre; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE membre (
+    idmembre bigint NOT NULL,
+    nom character varying(50) NOT NULL,
+    prenom character varying(50) NOT NULL,
+    datenaissance date NOT NULL,
+    sexe character varying(1) NOT NULL,
+    mail character varying(50) NOT NULL,
+    motdepasse character varying(50) NOT NULL
+);
+
+
+ALTER TABLE membre OWNER TO postgres;
+
+--
+-- TOC entry 187 (class 1259 OID 17423)
+-- Name: participationphoto; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE participationphoto (
+    idparticipationphoto bigint NOT NULL,
+    idevenementphoto bigint NOT NULL,
+    idphotomembre bigint NOT NULL,
+    dateparticipationphoto date NOT NULL,
+    nombrevote bigint NOT NULL
+);
+
+
+ALTER TABLE participationphoto OWNER TO postgres;
+
+--
+-- TOC entry 188 (class 1259 OID 17426)
+-- Name: participationtexte; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE participationtexte (
+    idparticipationtexte bigint NOT NULL,
+    idtextemembre bigint NOT NULL,
+    idevenementtexte bigint NOT NULL,
+    dateparticipationtexte date NOT NULL,
+    nombrevote bigint NOT NULL
+);
+
+
+ALTER TABLE participationtexte OWNER TO postgres;
+
+--
+-- TOC entry 189 (class 1259 OID 17429)
+-- Name: photo; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE photo (
+    idphoto bigint NOT NULL,
+    url character varying(200) NOT NULL
+);
+
+
+ALTER TABLE photo OWNER TO postgres;
+
+--
+-- TOC entry 190 (class 1259 OID 17432)
+-- Name: photomembre; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE photomembre (
+    idphotomembre bigint NOT NULL,
+    idmembre bigint NOT NULL,
+    url character varying(200) NOT NULL,
+    datephotomembre date
+);
+
+
+ALTER TABLE photomembre OWNER TO postgres;
+
+--
+-- TOC entry 191 (class 1259 OID 17435)
+-- Name: profilmembre; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE profilmembre (
+    idprofilmembre bigint NOT NULL,
+    idmembre bigint NOT NULL,
+    idphotomembre bigint NOT NULL,
+    mail character varying(50) NOT NULL,
+    motdepasse character varying(50) NOT NULL
+);
+
+
+ALTER TABLE profilmembre OWNER TO postgres;
+
+--
+-- TOC entry 192 (class 1259 OID 17438)
+-- Name: textemembre; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE textemembre (
+    idtextemembre bigint NOT NULL,
+    idmembre bigint NOT NULL,
+    titre character varying(50) NOT NULL,
+    contenu text NOT NULL,
+    datetexte date NOT NULL
+);
+
+
+ALTER TABLE textemembre OWNER TO postgres;
+
+--
+-- TOC entry 193 (class 1259 OID 17444)
+-- Name: token; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE token (
+    idtoken bigint NOT NULL,
+    code character varying(25) NOT NULL
+);
+
+
+ALTER TABLE token OWNER TO postgres;
+
+--
+-- TOC entry 2209 (class 0 OID 17399)
+-- Dependencies: 181
+-- Data for Name: amitie; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO amitie (idamitie, idmembre, mem_idmembre, dateajout, ami) VALUES (1, 2, 1, '2017-02-10', true);
+
+
+--
+-- TOC entry 2210 (class 0 OID 17402)
+-- Dependencies: 182
+-- Data for Name: demandeami; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO demandeami (iddemandeami, idmembre, mem_idmembre, datedemandeami, accepte, vue) VALUES (1, 2, 1, '2017-02-10', true, true);
+
+
+--
+-- TOC entry 2211 (class 0 OID 17405)
+-- Dependencies: 183
+-- Data for Name: evenementphoto; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO evenementphoto (idevenementphoto, titre, description, dateevenement, dateexpiration) VALUES (1, 'tay @ amany', 'qazsedrtyuiop', '2017-02-10', '2017-02-12');
+INSERT INTO evenementphoto (idevenementphoto, titre, description, dateevenement, dateexpiration) VALUES (2, 'tena event', 'qsdfqsdfqsf', '2017-02-11', '2017-02-13');
+
+
+--
+-- TOC entry 2212 (class 0 OID 17411)
+-- Dependencies: 184
+-- Data for Name: evenementtexte; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2213 (class 0 OID 17417)
+-- Dependencies: 185
+-- Data for Name: inscription; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2214 (class 0 OID 17420)
+-- Dependencies: 186
+-- Data for Name: membre; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO membre (idmembre, nom, prenom, datenaissance, sexe, mail, motdepasse) VALUES (1, 'herinihaja', 'sitrakiniaina', '1996-03-01', 'H', 'herinihaja@gmail.com', 'herinihaja');
+INSERT INTO membre (idmembre, nom, prenom, datenaissance, sexe, mail, motdepasse) VALUES (2, 'Jonathan', 'Jonathan', '1997-02-12', 'H', 'jonathan@gmail.com', 'jonathan');
+
+
+--
+-- TOC entry 2215 (class 0 OID 17423)
+-- Dependencies: 187
+-- Data for Name: participationphoto; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO participationphoto (idparticipationphoto, idevenementphoto, idphotomembre, dateparticipationphoto, nombrevote) VALUES (1, 1, 3, '2017-02-10', 0);
+
+
+--
+-- TOC entry 2216 (class 0 OID 17426)
+-- Dependencies: 188
+-- Data for Name: participationtexte; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2217 (class 0 OID 17429)
+-- Dependencies: 189
+-- Data for Name: photo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO photo (idphoto, url) VALUES (1, 'url/pdp');
+
+
+--
+-- TOC entry 2218 (class 0 OID 17432)
+-- Dependencies: 190
+-- Data for Name: photomembre; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO photomembre (idphotomembre, idmembre, url, datephotomembre) VALUES (1, 1, 'url/pdp', '2017-02-10');
+INSERT INTO photomembre (idphotomembre, idmembre, url, datephotomembre) VALUES (2, 2, 'url/pdp', '2017-02-10');
+INSERT INTO photomembre (idphotomembre, idmembre, url, datephotomembre) VALUES (3, 2, 'D:\S5 ITU\Mr Rojo\PostVersusVF\PostVersus\nbbuild\web\image\JonathanJonathan3Lighthouse.jpg', '2017-02-10');
+
+
+--
+-- TOC entry 2219 (class 0 OID 17435)
+-- Dependencies: 191
+-- Data for Name: profilmembre; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO profilmembre (idprofilmembre, idmembre, idphotomembre, mail, motdepasse) VALUES (1, 1, 1, 'herinihaja@gmail.com', 'herinihaja');
+INSERT INTO profilmembre (idprofilmembre, idmembre, idphotomembre, mail, motdepasse) VALUES (2, 2, 2, 'jonathan@gmail.com', 'jonathan');
+
+
+--
+-- TOC entry 2220 (class 0 OID 17438)
+-- Dependencies: 192
+-- Data for Name: textemembre; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2221 (class 0 OID 17444)
+-- Dependencies: 193
+-- Data for Name: token; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2034 (class 2606 OID 17448)
+-- Name: pk_amitie; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY amitie
+    ADD CONSTRAINT pk_amitie PRIMARY KEY (idamitie);
+
+
+--
+-- TOC entry 2039 (class 2606 OID 17450)
+-- Name: pk_demandeami; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY demandeami
+    ADD CONSTRAINT pk_demandeami PRIMARY KEY (iddemandeami);
+
+
+--
+-- TOC entry 2042 (class 2606 OID 17452)
+-- Name: pk_evenementphoto; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY evenementphoto
+    ADD CONSTRAINT pk_evenementphoto PRIMARY KEY (idevenementphoto);
+
+
+--
+-- TOC entry 2045 (class 2606 OID 17454)
+-- Name: pk_evenementtexte; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY evenementtexte
+    ADD CONSTRAINT pk_evenementtexte PRIMARY KEY (idevenementtexte);
+
+
+--
+-- TOC entry 2048 (class 2606 OID 17456)
+-- Name: pk_inscription; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY inscription
+    ADD CONSTRAINT pk_inscription PRIMARY KEY (idinscription);
+
+
+--
+-- TOC entry 2052 (class 2606 OID 17458)
+-- Name: pk_membre; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY membre
+    ADD CONSTRAINT pk_membre PRIMARY KEY (idmembre);
+
+
+--
+-- TOC entry 2057 (class 2606 OID 17460)
+-- Name: pk_participationphoto; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY participationphoto
+    ADD CONSTRAINT pk_participationphoto PRIMARY KEY (idparticipationphoto);
+
+
+--
+-- TOC entry 2062 (class 2606 OID 17462)
+-- Name: pk_participationtexte; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY participationtexte
+    ADD CONSTRAINT pk_participationtexte PRIMARY KEY (idparticipationtexte);
+
+
+--
+-- TOC entry 2065 (class 2606 OID 17464)
+-- Name: pk_photo; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY photo
+    ADD CONSTRAINT pk_photo PRIMARY KEY (idphoto);
+
+
+--
+-- TOC entry 2069 (class 2606 OID 17466)
+-- Name: pk_photomembre; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY photomembre
+    ADD CONSTRAINT pk_photomembre PRIMARY KEY (idphotomembre);
+
+
+--
+-- TOC entry 2072 (class 2606 OID 17468)
+-- Name: pk_profilmembre; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY profilmembre
+    ADD CONSTRAINT pk_profilmembre PRIMARY KEY (idprofilmembre);
+
+
+--
+-- TOC entry 2077 (class 2606 OID 17470)
+-- Name: pk_textemembre; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY textemembre
+    ADD CONSTRAINT pk_textemembre PRIMARY KEY (idtextemembre);
+
+
+--
+-- TOC entry 2080 (class 2606 OID 17472)
+-- Name: pk_token; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY token
+    ADD CONSTRAINT pk_token PRIMARY KEY (idtoken);
+
+
+--
+-- TOC entry 2035 (class 1259 OID 17473)
+-- Name: accepte_membre_fk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX accepte_membre_fk ON demandeami USING btree (mem_idmembre);
+
+
+--
+-- TOC entry 2030 (class 1259 OID 17474)
+-- Name: accepteami_fk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX accepteami_fk ON amitie USING btree (idmembre);
+
+
+--
+-- TOC entry 2031 (class 1259 OID 17475)
+-- Name: amitie_pk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX amitie_pk ON amitie USING btree (idamitie);
+
+
+--
+-- TOC entry 2058 (class 1259 OID 17476)
+-- Name: association_10_fk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX association_10_fk ON participationtexte USING btree (idtextemembre);
+
+
+--
+-- TOC entry 2053 (class 1259 OID 17477)
+-- Name: association_11_fk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX association_11_fk ON participationphoto USING btree (idphotomembre);
+
+
+--
+-- TOC entry 2054 (class 1259 OID 17478)
+-- Name: association_12_fk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX association_12_fk ON participationphoto USING btree (idevenementphoto);
+
+
+--
+-- TOC entry 2070 (class 1259 OID 17479)
+-- Name: association_13_fk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX association_13_fk ON profilmembre USING btree (idphotomembre);
+
+
+--
+-- TOC entry 2075 (class 1259 OID 17480)
+-- Name: association_14_fk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX association_14_fk ON textemembre USING btree (idmembre);
+
+
+--
+-- TOC entry 2066 (class 1259 OID 17481)
+-- Name: association_8_fk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX association_8_fk ON photomembre USING btree (idmembre);
+
+
+--
+-- TOC entry 2059 (class 1259 OID 17482)
+-- Name: association_9_fk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX association_9_fk ON participationtexte USING btree (idevenementtexte);
+
+
+--
+-- TOC entry 2032 (class 1259 OID 17483)
+-- Name: demande_ami_fk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX demande_ami_fk ON amitie USING btree (mem_idmembre);
+
+
+--
+-- TOC entry 2036 (class 1259 OID 17484)
+-- Name: demandeami_pk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX demandeami_pk ON demandeami USING btree (iddemandeami);
+
+
+--
+-- TOC entry 2040 (class 1259 OID 17485)
+-- Name: evenementphoto_pk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX evenementphoto_pk ON evenementphoto USING btree (idevenementphoto);
+
+
+--
+-- TOC entry 2043 (class 1259 OID 17486)
+-- Name: evenementtexte_pk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX evenementtexte_pk ON evenementtexte USING btree (idevenementtexte);
+
+
+--
+-- TOC entry 2046 (class 1259 OID 17487)
+-- Name: inscription_pk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX inscription_pk ON inscription USING btree (idinscription);
+
+
+--
+-- TOC entry 2037 (class 1259 OID 17488)
+-- Name: invitation_membre_fk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX invitation_membre_fk ON demandeami USING btree (idmembre);
+
+
+--
+-- TOC entry 2050 (class 1259 OID 17489)
+-- Name: membre_pk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX membre_pk ON membre USING btree (idmembre);
+
+
+--
+-- TOC entry 2055 (class 1259 OID 17490)
+-- Name: participationphoto_pk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX participationphoto_pk ON participationphoto USING btree (idparticipationphoto);
+
+
+--
+-- TOC entry 2060 (class 1259 OID 17491)
+-- Name: participationtexte_pk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX participationtexte_pk ON participationtexte USING btree (idparticipationtexte);
+
+
+--
+-- TOC entry 2063 (class 1259 OID 17492)
+-- Name: photo_pk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX photo_pk ON photo USING btree (idphoto);
+
+
+--
+-- TOC entry 2067 (class 1259 OID 17493)
+-- Name: photomembre_pk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX photomembre_pk ON photomembre USING btree (idphotomembre);
+
+
+--
+-- TOC entry 2073 (class 1259 OID 17494)
+-- Name: profil_membre_fk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX profil_membre_fk ON profilmembre USING btree (idmembre);
+
+
+--
+-- TOC entry 2074 (class 1259 OID 17495)
+-- Name: profilmembre_pk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX profilmembre_pk ON profilmembre USING btree (idprofilmembre);
+
+
+--
+-- TOC entry 2078 (class 1259 OID 17496)
+-- Name: textemembre_pk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX textemembre_pk ON textemembre USING btree (idtextemembre);
+
+
+--
+-- TOC entry 2049 (class 1259 OID 17497)
+-- Name: token_inscription_fk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX token_inscription_fk ON inscription USING btree (idtoken);
+
+
+--
+-- TOC entry 2081 (class 1259 OID 17498)
+-- Name: token_pk; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX token_pk ON token USING btree (idtoken);
+
+
+--
+-- TOC entry 2082 (class 2606 OID 17499)
+-- Name: fk_amitie_accepteam_membre; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY amitie
+    ADD CONSTRAINT fk_amitie_accepteam_membre FOREIGN KEY (idmembre) REFERENCES membre(idmembre) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 2083 (class 2606 OID 17504)
+-- Name: fk_amitie_demande_a_membre; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY amitie
+    ADD CONSTRAINT fk_amitie_demande_a_membre FOREIGN KEY (mem_idmembre) REFERENCES membre(idmembre) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 2084 (class 2606 OID 17509)
+-- Name: fk_demandea_accepte_m_membre; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY demandeami
+    ADD CONSTRAINT fk_demandea_accepte_m_membre FOREIGN KEY (mem_idmembre) REFERENCES membre(idmembre) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 2085 (class 2606 OID 17514)
+-- Name: fk_demandea_invitatio_membre; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY demandeami
+    ADD CONSTRAINT fk_demandea_invitatio_membre FOREIGN KEY (idmembre) REFERENCES membre(idmembre) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 2086 (class 2606 OID 17519)
+-- Name: fk_inscript_token_ins_token; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY inscription
+    ADD CONSTRAINT fk_inscript_token_ins_token FOREIGN KEY (idtoken) REFERENCES token(idtoken) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 2087 (class 2606 OID 17524)
+-- Name: fk_particip_associati_evenemen; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY participationphoto
+    ADD CONSTRAINT fk_particip_associati_evenemen FOREIGN KEY (idevenementphoto) REFERENCES evenementphoto(idevenementphoto) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 2089 (class 2606 OID 17529)
+-- Name: fk_particip_associati_evenemen; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY participationtexte
+    ADD CONSTRAINT fk_particip_associati_evenemen FOREIGN KEY (idevenementtexte) REFERENCES evenementtexte(idevenementtexte) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 2088 (class 2606 OID 17534)
+-- Name: fk_particip_associati_photomem; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY participationphoto
+    ADD CONSTRAINT fk_particip_associati_photomem FOREIGN KEY (idphotomembre) REFERENCES photomembre(idphotomembre) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 2090 (class 2606 OID 17539)
+-- Name: fk_particip_associati_textemem; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY participationtexte
+    ADD CONSTRAINT fk_particip_associati_textemem FOREIGN KEY (idtextemembre) REFERENCES textemembre(idtextemembre) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 2091 (class 2606 OID 17544)
+-- Name: fk_photomem_associati_membre; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY photomembre
+    ADD CONSTRAINT fk_photomem_associati_membre FOREIGN KEY (idmembre) REFERENCES membre(idmembre) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 2092 (class 2606 OID 17549)
+-- Name: fk_profilme_associati_photomem; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY profilmembre
+    ADD CONSTRAINT fk_profilme_associati_photomem FOREIGN KEY (idphotomembre) REFERENCES photomembre(idphotomembre) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 2093 (class 2606 OID 17554)
+-- Name: fk_profilme_profil_me_membre; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY profilmembre
+    ADD CONSTRAINT fk_profilme_profil_me_membre FOREIGN KEY (idmembre) REFERENCES membre(idmembre) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 2094 (class 2606 OID 17559)
+-- Name: fk_textemem_associati_membre; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY textemembre
+    ADD CONSTRAINT fk_textemem_associati_membre FOREIGN KEY (idmembre) REFERENCES membre(idmembre) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 2228 (class 0 OID 0)
+-- Dependencies: 7
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2017-02-12 17:35:50
+
+--
+-- PostgreSQL database dump complete
+--
+

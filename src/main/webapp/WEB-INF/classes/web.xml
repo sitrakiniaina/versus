@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>Index</servlet-name>
+        <servlet-class>servlet.Index</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Authentify</servlet-name>
+        <servlet-class>servlet.Authentify</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddProduit</servlet-name>
+        <servlet-class>servlet.AddProduit</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddCookie</servlet-name>
+        <servlet-class>servlet.AddCookie</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Index</servlet-name>
+        <url-pattern>/servlet/Index</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Authentify</servlet-name>
+        <url-pattern>/servlet/Authentify</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProduit</servlet-name>
+        <url-pattern>/servlet/AddProduit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddCookie</servlet-name>
+        <url-pattern>/servlet/AddCookie</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>
+            Index.html
+        </welcome-file>
+    </welcome-file-list>
+</web-app>

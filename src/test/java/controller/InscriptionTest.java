@@ -37,7 +37,7 @@ public class InscriptionTest {
     }
     
     @After
-    public void tearDown() {
+    public void tearDown() throws Exception {
         
     }
 
@@ -61,8 +61,9 @@ public class InscriptionTest {
         String mdp1 = "lion";
         String mdp2 = "lion";
         Inscription.inscription(nom, prenom, dateNaissance, sexe, mail, mdp1, mdp2);
+        tearDown();
         long nombreLignes = GestionEntity.getMaxId("membre");
-        System.out.println("nombre de ligne après : "+nombreLignes);
+        System.out.println("nombre de ligne après insert : "+nombreLignes );
         assertEquals(nombreLigne+1, nombreLignes);  
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");

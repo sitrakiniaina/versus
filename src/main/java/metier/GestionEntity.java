@@ -3,6 +3,7 @@ package metier;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 import jdbc.Connexion;
 
@@ -80,4 +81,13 @@ public class GestionEntity
                 c.close();
 		return valiny;
 	}
+        public static void delete(String nomTable) throws Exception{
+            /*long maxid= GestionEntity.getMaxId(nomTable);
+            String sql = "delete from "+nomTable;
+                sql+=" where id"+nomTable+" = "+maxid;
+            Connection c = jdbc.Connexion.getConnection();
+            Statement s = c.createStatement();
+            s.executeUpdate(sql);
+            c.close();*/
+        }
 }

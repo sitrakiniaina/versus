@@ -40,7 +40,6 @@ controller\LienAccueil.class
 controller\VoirAmisMobile.class
 metier\GestionEntity.class
 controller\AffichageCreationEvenement.class
-test\Test.class
 controller\DemanderAmi.class
 controller\JaimepasMobile.class
 mapping\Membre.class

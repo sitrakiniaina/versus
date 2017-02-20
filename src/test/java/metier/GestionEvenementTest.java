@@ -53,12 +53,10 @@ public class GestionEvenementTest {
         System.out.println("amisEnCommun");
         long idMembre1 = 1;
         long idMembre2 = 1;
-        ArrayList<Membre> expResult = null;
+        long  expResult = 1;
         ArrayList<Membre> result = GestionEvenement.amisEnCommun(idMembre1, idMembre2);
         System.out.println("nombre d'amis en commun de 1 et 1: "+result.size());
-        result = GestionEvenement.amisEnCommun(1, 2);
-        System.out.println("nombre d'amis en commun de 1 et 2: "+result.size());
-        //assertEquals(expResult, result);
+        assertEquals(expResult, result.size());
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }

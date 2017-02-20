@@ -38,6 +38,7 @@ public class InscriptionTest {
     
     @After
     public void tearDown() {
+        
     }
 
     
@@ -62,7 +63,7 @@ public class InscriptionTest {
         Inscription.inscription(nom, prenom, dateNaissance, sexe, mail, mdp1, mdp2);
         long nombreLignes = GestionEntity.getMaxId("membre");
         System.out.println("nombre de ligne après : "+nombreLignes);
-        
+        assertEquals(nombreLigne+1, nombreLignes);  
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
